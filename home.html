@@ -1,235 +1,730 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Friendship Story</title>
-    <style>
-        :root {
-            --primary-color: #66b3ff;
-            --background: #000;
-            --text-color: #fff;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        }
-
-        body {
-            color: var(--text-color);
-            min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-            background: radial-gradient(circle at center, rgba(0, 153, 255, 0.3), transparent 70%),
-                        linear-gradient(135deg, #000000, #001F3F);
-            background-size: 200% 200%, 400% 400%;
-            animation: gradientBG 8s ease infinite;
-        }
-
-        @keyframes gradientBG {
-            0% {
-                background-position: 0% 0%, 0% 0%;
-            }
-            50% {
-                background-position: 100% 100%, 100% 100%;
-            }
-            100% {
-                background-position: 0% 0%, 0% 0%;
-            }
-        }
-
-        /* Navigation */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.8rem 1.2rem;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            margin: 1rem 2rem;
-            border-radius: 100px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .logo {
-            font-size: 1.3rem;
-            font-weight: 500;
-            letter-spacing: -0.5px;
-            padding-left: 1rem;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            padding: 0.5rem 1.5rem;
-            border-radius: 100px;
-            margin: 0 1rem;
-        }
-
-        .nav-links a {
-            color: var(--text-color);
-            text-decoration: none;
-            opacity: 0.7;
-            transition: opacity 0.3s;
-            font-size: 0.9rem;
-            text-transform: lowercase;
-            letter-spacing: 0.5px;
-            font-weight: 400;
-            padding: 0.3rem 0.8rem;
-        }
-
-        .nav-links a:hover {
-            opacity: 1;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 100px;
-        }
-
-        .about-btn {
-            position: relative;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 0.6rem 1.2rem;
-            color: var(--text-color);
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.3s;
-            overflow: hidden;
-            margin-right: 1rem;
-        }
-
-        /* Glowing border animation for About Us button */
-        .about-btn::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            border-radius: 50px;
-            background: linear-gradient(45deg, 
-                #66b3ff, #fff, #66b3ff, 
-                transparent, transparent);
-            z-index: -1;
-            animation: glowing 3s linear infinite;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .about-btn:hover::before {
-            opacity: 1;
-        }
-
-        @keyframes glowing {
-            0% {
-                background-position: 0 0;
-            }
-            50% {
-                background-position: 400% 0;
-            }
-            100% {
-                background-position: 0 0;
-            }
-        }
-
-        /* Hero Section */
-        .hero {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 80vh;
-            text-align: center;
-            position: relative;
-        }
-
-        .title {
-            font-size: 5rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            background: linear-gradient(to right, #fff, var(--primary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .dot {
-            color: var(--primary-color);
-            -webkit-text-fill-color: var(--primary-color);
-        }
-
-        .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.8;
-            margin-bottom: 2rem;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .primary-btn, .secondary-btn {
-            padding: 1rem 2rem;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s;
-        }
-
-        .primary-btn {
-            background: var(--primary-color);
-            border: none;
-            color: var(--background);
-        }
-
-        .secondary-btn {
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: var(--text-color);
-        }
-
-        .primary-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 179, 255, 0.3);
-        }
-
-        .secondary-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        /* Background Effect */
-        .hero::before {
-            display: none;
-        }
-    </style>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-</head>
-<body>
-    <nav class="navbar">
-        <div class="logo">* Friendship</div>
-        <div class="nav-links">
-            <a href="#home">home</a>
-            <a href="#person1">person 1</a>
-            <a href="#person2">person 2</a>
-            <a href="#person3">person 3</a>
-            <a href="#funfact">funfact</a>
-        </div>
-        <button class="about-btn">About Us</button>
-    </nav>
-
-    <main class="hero">
-        <h1 class="title">Three Friends<span class="dot">.</span></h1>
-        <p class="subtitle">A story of friendship, memories, and endless adventures.</p>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Friendship Story</title>
         
-        <div class="cta-buttons">
-            <button class="primary-btn">Our Story</button>
-            <button class="secondary-btn">Meet Us →</button>
+        <style>
+            :root {
+                --primary-color: #66b3ff;
+                --background: #000;
+                --text-color: #fff;
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            }
+
+            body {
+                color: var(--text-color);
+                min-height: 100vh;
+                position: relative;
+                overflow-x: hidden;
+                background: #000;
+                margin: 0;
+                padding: 0;
+            }
+
+            @keyframes gradientBG {
+                0% {
+                    background-position: 0% 0%, 0% 0%;
+                }
+                50% {
+                    background-position: 100% 100%, 100% 100%;
+                }
+                100% {
+                    background-position: 0% 0%, 0% 0%;
+                }
+            }
+
+            /* Add cursor bubble effect */
+            body::after {
+                content: '';
+                position: fixed;
+                width: 200px;
+                height: 200px;
+                background: radial-gradient(circle at center, 
+                    rgba(0, 153, 255, 0.15),
+                    rgba(0, 153, 255, 0.1),
+                    transparent 70%);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9999;
+                transform: translate(-50%, -50%);
+                transition: all 0.1s ease;
+                mix-blend-mode: screen;
+            }
+
+            /* Add morphing background shapes */
+            .background-shapes {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                z-index: 1;
+                background: transparent;
+            }
+
+            .shape {
+                position: absolute;
+                background: linear-gradient(45deg, rgba(0, 153, 255, 0.15), rgba(0, 153, 255, 0.1));
+                border-radius: 50%;
+                filter: blur(60px);
+                animation: morphing 20s ease-in-out infinite;
+                opacity: 0.5;
+            }
+
+            .shape:nth-child(1) {
+                top: -15%;
+                left: -15%;
+                width: 50%;
+                height: 50%;
+                animation-delay: 0s;
+            }
+
+            .shape:nth-child(2) {
+                top: 25%;
+                right: -15%;
+                width: 40%;
+                height: 40%;
+                animation-delay: -5s;
+            }
+
+            .shape:nth-child(3) {
+                bottom: -15%;
+                left: 25%;
+                width: 45%;
+                height: 45%;
+                animation-delay: -10s;
+            }
+
+            @keyframes morphing {
+                0% {
+                    border-radius: 50%;
+                    transform: translate(0, 0) rotate(0deg);
+                }
+                25% {
+                    border-radius: 40% 60% 60% 40% / 40% 60% 60% 40%;
+                    transform: translate(5%, 5%) rotate(45deg);
+                }
+                50% {
+                    border-radius: 60% 40% 40% 60% / 60% 40% 60% 40%;
+                    transform: translate(0, 10%) rotate(90deg);
+                }
+                75% {
+                    border-radius: 40% 60% 60% 40% / 60% 40% 60% 40%;
+                    transform: translate(-5%, 5%) rotate(135deg);
+                }
+                100% {
+                    border-radius: 50%;
+                    transform: translate(0, 0) rotate(180deg);
+                }
+            }
+
+            /* Navigation */
+            .navbar {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0.8rem 1.2rem;
+                background: rgba(255, 255, 255, 0.03);
+                backdrop-filter: blur(10px);
+                border-radius: 100px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                position: fixed;
+                top: 1rem;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 1000;
+                width: calc(100% - 4rem);
+            }
+
+            .logo {
+                font-size: 1.3rem;
+                font-weight: 500;
+                letter-spacing: -0.5px;
+                padding-left: 1rem;
+            }
+
+            .nav-links {
+                display: flex;
+                gap: 2rem;
+                padding: 0.5rem 1.5rem;
+                border-radius: 100px;
+                margin: 0 1rem;
+            }
+
+            .nav-links a {
+                color: var(--text-color);
+                text-decoration: none;
+                opacity: 0.7;
+                transition: opacity 0.3s;
+                font-size: 0.9rem;
+                text-transform: lowercase;
+                letter-spacing: 0.5px;
+                font-weight: 400;
+                padding: 0.3rem 0.8rem;
+            }
+
+            .nav-links a:hover {
+                opacity: 1;
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 100px;
+            }
+
+            .about-btn {
+                position: relative;
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                padding: 0.6rem 1.2rem;
+                color: var(--text-color);
+                border-radius: 50px;
+                cursor: pointer;
+                font-size: 0.9rem;
+                transition: all 0.3s;
+                overflow: hidden;
+                margin-right: 1rem;
+            }
+
+            /* Restore the original glowing border animation */
+            .about-btn::before {
+                content: '';
+                position: absolute;
+                inset: -2px;
+                background: linear-gradient(45deg, #66b3ff, transparent, #66b3ff);
+                border-radius: 50px;
+                z-index: -1;
+                animation: glowing 1.5s linear infinite;
+                opacity: 0;
+                transition: opacity 0.3s;
+            }
+
+            @keyframes glowing {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+
+            /* Hero Section */
+            .hero {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+                text-align: center;
+                position: absolute;
+                width: 100%;
+                left: 0;
+                top: 0;
+                background: radial-gradient(circle at center, rgba(0, 153, 255, 0.2), transparent 50%),
+                            linear-gradient(135deg, #000000, #001F3F);
+                background-size: 150% 150%, 400% 400%;
+                animation: gradientBG 15s ease infinite;
+                margin: 0;
+                padding: 0;
+            }
+
+            /* Remove the before and after pseudo-elements that were creating gaps */
+            .hero::after,
+            .hero::before {
+                display: none;
+            }
+
+            .title {
+                font-size: 5rem;
+                font-weight: bold;
+                margin-bottom: 1rem;
+                background: linear-gradient(to right, #fff, var(--primary-color));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
+            .dot {
+                color: var(--primary-color);
+                -webkit-text-fill-color: var(--primary-color);
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+                opacity: 0.8;
+                margin-bottom: 2rem;
+            }
+
+            .cta-buttons {
+                display: flex;
+                gap: 1rem;
+            }
+
+            /* Button styles */
+            .primary-btn, .secondary-btn {
+                padding: 1rem 2rem;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 1rem;
+                transition: all 0.3s;
+                position: relative;
+                z-index: 10; /* Ensure buttons are clickable */
+            }
+
+            .primary-btn {
+                background: var(--primary-color);
+                border: none;
+                color: var(--background);
+            }
+
+            .secondary-btn {
+                background: transparent;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                color: var(--text-color);
+            }
+
+            .primary-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(102, 179, 255, 0.3);
+            }
+
+            .secondary-btn:hover {
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            /* Make sure all interactive elements are clickable */
+            .navbar, .nav-links, .about-btn, .cta-buttons {
+                position: relative;
+                z-index: 10;
+            }
+
+            /* Ensure background doesn't interfere with clicks */
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none; /* Allow clicks to pass through */
+                z-index: 1;
+            }
+
+            /* Team Section */
+            .team {
+                margin-top: 100vh;
+                position: relative;
+                background: #000;
+                padding: 6rem 4rem;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                overflow: hidden;
+                opacity: 0;
+                transform: translateY(50px);
+                transition: all 1s ease;
+            }
+
+            .team.active {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            /* Add side gradients */
+            .team::before,
+            .team::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                width: 15%;
+                height: 100%;
+                z-index: 2;
+                pointer-events: none;
+            }
+
+            .team::before {
+                left: 0;
+                background: linear-gradient(to right, #000, transparent);
+            }
+
+            .team::after {
+                right: 0;
+                background: linear-gradient(to left, #000, transparent);
+            }
+
+            .team-title {
+                font-size: 5rem;
+                margin-bottom: 4rem;
+                margin-left: 2rem;
+                background: linear-gradient(to right, #fff, var(--primary-color));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                z-index: 3;
+                position: relative;
+            }
+
+            .team-grid {
+                display: flex;
+                gap: 4rem;
+                padding: 2rem;
+                animation: slideTeam 30s linear infinite;
+                width: max-content;
+            }
+
+            @keyframes slideTeam {
+                0% {
+                    transform: translateX(0);
+                }
+                100% {
+                    transform: translateX(-50%);
+                }
+            }
+
+            .team-member {
+                min-width: 300px;
+                padding: 2rem;
+                background: rgba(30, 30, 30, 0.3);
+                border-radius: 20px;
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                position: relative;
+            }
+
+            .member-image {
+                width: 150px;
+                height: 150px;
+                margin: 0 auto 1.5rem;
+                position: relative;
+                z-index: 1;
+            }
+
+            .member-image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .member-role {
+                color: var(--primary-color);
+                font-size: 0.9rem;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                margin-bottom: 0.5rem;
+                opacity: 0.7;
+            }
+
+            .member-name {
+                color: #fff;
+                font-size: 2rem;
+                font-weight: 600;
+                margin-bottom: 0.5rem;
+            }
+
+            /* Update the background shapes */
+            .team-member::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(
+                    45deg,
+                    rgba(255, 255, 255, 0.03),
+                    rgba(255, 255, 255, 0.05)
+                );
+                border-radius: 20px;
+                z-index: 0;
+            }
+
+            /* Duplicate team members for infinite scroll */
+            .team-grid {
+                display: flex;
+                animation: slideTeam 30s linear infinite;
+            }
+
+            .team-grid > * {
+                flex-shrink: 0;
+            }
+
+            /* Clone the team members in JavaScript for infinite scroll */
+
+            /* Process Section */
+            .process {
+                background: #000;
+                padding: 8rem 4rem;
+                min-height: 100vh;
+                position: relative;
+                opacity: 0;
+                transform: translateY(50px);
+                transition: all 1s ease;
+            }
+
+            .process.active {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .process-title {
+                font-size: 5rem;
+                margin-bottom: 6rem;
+                margin-left: 2rem;
+                background: linear-gradient(to right, #fff, var(--primary-color));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
+            .process-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 3rem;
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+
+            .process-card {
+                background: rgba(30, 30, 30, 0.3);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 20px;
+                padding: 2.5rem;
+                position: relative;
+                backdrop-filter: blur(10px);
+                transition: transform 0.3s ease;
+            }
+
+            .process-card:hover {
+                transform: translateY(-10px);
+            }
+
+            .number {
+                font-size: 3rem;
+                font-weight: 700;
+                background: linear-gradient(to right, #fff, var(--primary-color));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                margin-bottom: 1.5rem;
+                font-family: 'Inter', monospace;
+            }
+
+            .process-card h3 {
+                font-size: 1.8rem;
+                margin-bottom: 1rem;
+                color: #fff;
+            }
+
+            .process-card p {
+                color: rgba(255, 255, 255, 0.7);
+                line-height: 1.6;
+                font-size: 1rem;
+            }
+
+            /* Add subtle glow effect on hover */
+            .process-card::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(
+                    45deg,
+                    transparent,
+                    rgba(102, 179, 255, 0.1),
+                    transparent
+                );
+                border-radius: 20px;
+                z-index: -1;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            .process-card:hover::before {
+                opacity: 1;
+            }
+
+            /* Responsive adjustments */
+            @media (max-width: 1200px) {
+                .process-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+
+            @media (max-width: 768px) {
+                .process-grid {
+                    grid-template-columns: 1fr;
+                }
+                .process-title {
+                    font-size: 3rem;
+                }
+            }
+
+            /* Add base reveal animation styles */
+            .reveal {
+                opacity: 0;
+                transform: translateY(50px);
+                transition: all 1s ease;
+            }
+
+            .reveal.active {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            /* Smooth scroll behavior to html */
+            html {
+                scroll-behavior: smooth;
+            }
+        </style>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="background-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
         </div>
-    </main>
-</body>
-</html> 
+        <nav class="navbar">
+            <div class="logo">* Friendship</div>
+            <div class="nav-links">
+                <a href="#home">home</a>
+                <a href="#affan">affan</a>
+                <a href="#seyf">seyf</a>
+                <a href="#radhit">radhit</a>
+            </div>
+            <button class="about-btn">About Us</button>
+        </nav>
+
+        <main class="hero">
+            <h1 class="title">Three Friends<span class="dot">.</span></h1>
+            <p class="subtitle">A story of friendship, memories, and endless adventures.</p>
+            
+            <div class="cta-buttons">
+                <button class="primary-btn">Our Story</button>
+                <button class="secondary-btn">Meet Us →</button>
+            </div>
+        </main>
+
+        <!-- Team Section -->
+        <section class="team">
+            <h2 class="team-title">Meet our team<span class="dot">.</span></h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="person1.jpg" alt="Affan">
+                    </div>
+                    <span class="member-role">Person 1</span>
+                    <h3 class="member-name">Affan</h3>
+                </div>
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="person2.jpg" alt="Seyf">
+                    </div>
+                    <span class="member-role">Person 2</span>
+                    <h3 class="member-name">Seyf</h3>
+                </div>
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="person3.jpg" alt="Radhit">
+                    </div>
+                    <span class="member-role">Person 3</span>
+                    <h3 class="member-name">Radhit</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process Section -->
+        <section class="process">
+            <h2 class="process-title">Our Process<span class="dot">.</span></h2>
+            <div class="process-grid">
+                <div class="process-card">
+                    <div class="number">01</div>
+                    <h3>Meeting</h3>
+                    <p>It all started with a chance encounter in our lives, where we discovered shared interests and values that would form the foundation of our friendship.</p>
+                </div>
+                <div class="process-card">
+                    <div class="number">02</div>
+                    <h3>Building Bonds</h3>
+                    <p>Through shared experiences, adventures, and countless memories, we've built strong bonds that continue to grow stronger with each passing day.</p>
+                </div>
+                <div class="process-card">
+                    <div class="number">03</div>
+                    <h3>Growing Together</h3>
+                    <p>As we continue our journey, we support each other's growth, celebrate successes, and face challenges together as true friends.</p>
+                </div>
+            </div>
+        </section>
+
+        <script>
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.3
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        
+                        // If it's the team section, animate its children
+                        if (entry.target.classList.contains('team')) {
+                            const members = entry.target.querySelectorAll('.team-member');
+                            members.forEach((member, index) => {
+                                setTimeout(() => {
+                                    member.classList.add('visible');
+                                }, index * 200); // Stagger the animations
+                            });
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            // Observe the team section
+            observer.observe(document.querySelector('.team'));
+
+            // Clone team members for infinite scroll
+            const teamGrid = document.querySelector('.team-grid');
+            const members = document.querySelectorAll('.team-member');
+            
+            // Clone the members and append them to create the infinite scroll effect
+            members.forEach(member => {
+                const clone = member.cloneNode(true);
+                teamGrid.appendChild(clone);
+            });
+
+            // Scroll reveal function
+            function reveal() {
+                var reveals = document.querySelectorAll('.team, .process');
+                
+                reveals.forEach(element => {
+                    var windowHeight = window.innerHeight;
+                    var elementTop = element.getBoundingClientRect().top;
+                    var elementVisible = 150; // Adjust this value to change when the animation triggers
+                    
+                    if (elementTop < windowHeight - elementVisible) {
+                        element.classList.add('active');
+                    }
+                });
+            }
+
+            // Add scroll event listener
+            window.addEventListener('scroll', reveal);
+            
+            // Initial check for elements in view
+            reveal();
+
+            // Smooth scroll for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const section = document.querySelector(this.getAttribute('href'));
+                    section.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center' // Scroll to center
+                    });
+                });
+            });
+        </script>
+    </body>
