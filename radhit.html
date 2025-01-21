@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radhit - Sigma Student</title>
+    <link rel="stylesheet" href="radhit.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Section -->
+    <nav class="navbar">
+        <div class="logo"><a href="home.html" style="text-decoration: none; color: inherit;">Pace Hytam</a></div>
+        <div class="nav-links">
+            <a href="affan.html">affan</a>
+            <a href="seyf.html">seyf</a>
+            <a href="radhit.html">radhit</a>
+        </div>
+        <button class="about-btn">About Me</button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-image">
+                <div class="image-shape"></div>
+                <img src="assets/ppr.png" alt="Profile Picture">
+            </div>
+            <div class="hero-text">
+                <div class="text-shape"></div>
+                <h1>Obsessed with exploring<br><em>knowledge</em> and building<br>great things.</h1>
+                <p class="hero-subtitle">Meet, Radhit!. A student passionate about learning and creating.</p>
+            </div>
+        </div>
+        
+        <div class="companies">
+            <p>Proudly associated with</p>
+            <div class="company-logos">
+                <img src="assets/company1.svg" alt="Company 1">
+                <img src="assets/company2.svg" alt="Company 2">
+                <img src="assets/company3.svg" alt="Company 3">
+                <img src="assets/company4.svg" alt="Company 4">
+            </div>
+        </div>
+    </section>
+
+    <!-- Different Section -->
+    <section class="different">
+        <div class="different-content">
+            <div class="avatar-expression">
+                <!-- Add your animated avatar here -->
+            </div>
+            <h2>What makes me <em>different?</em></h2>
+            <p>I create robust and scalable solutions that solve real-world problems. By combining technical expertise with creative problem-solving, I ensure every project not only performs exceptionally but also delivers meaningful impact.</p>
+            <a href="#work" class="browse-work">Browse My Work →</a>
+        </div>
+    </section>
+
+    <!-- Portfolio Grid -->
+    <section class="portfolio">
+        <div class="project-grid">
+            <article class="project-card gradient-red">
+                <h3>Backend Architecture</h3>
+                <p>Scalable backend solutions for high-performance applications</p>
+                <div class="project-preview">
+                    <img src="assets/project1.png" alt="Backend Project">
+                </div>
+            </article>
+
+            <article class="project-card gradient-purple">
+                <h3>API Development</h3>
+                <p>RESTful APIs with clean architecture and documentation</p>
+                <div class="project-preview">
+                    <img src="assets/project2.png" alt="API Project">
+                </div>
+            </article>
+
+            <article class="project-card gradient-blue">
+                <h3>System Design</h3>
+                <p>Designing scalable systems for enterprise solutions</p>
+                <div class="project-preview">
+                    <img src="assets/project3.png" alt="System Design">
+                </div>
+            </article>
+
+            <article class="project-card gradient-gray">
+                <h3>Full Stack</h3>
+                <p>End-to-end development with modern technologies</p>
+                <div class="project-preview">
+                    <img src="assets/project4.png" alt="Full Stack">
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services">
+        <h2>How I can help <em>you?</em></h2>
+        <div class="service-options">
+            <div class="service">
+                <h3>Backend Development</h3>
+                <p>Want me to build you a robust, scalable backend system?</p>
+                <span class="price">Starting from $4,999</span>
+            </div>
+            <div class="service">
+                <h3>Full Stack Project</h3>
+                <p>Need a complete solution from backend to frontend?</p>
+                <span class="price">Starting from $9,999</span>
+            </div>
+        </div>
+        <a href="#contact" class="get-in-touch">Get In Touch →</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="clientele">
+            <p>Last updated: January 24, 2024 - 09:47</p>
+            <p>Based in Jakarta, Indonesia</p>
+        </div>
+        <div class="social-footer">
+            <a href="https://twitter.com/radhit">
+                <img src="assets/twitter.svg" alt="Twitter">
+            </a>
+            <a href="https://github.com/radhit">
+                <img src="assets/github.svg" alt="GitHub">
+            </a>
+        </div>
+        <div class="credits">
+            <p>Built with ❤️ using Modern Tech Stack</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Intersection Observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Observe all sections
+        document.querySelectorAll('section').forEach((section) => {
+            section.style.opacity = 0;
+            section.style.transform = 'translateY(20px)';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html> 
