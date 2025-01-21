@@ -1,837 +1,1013 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Friendship Story</title>
-        
-        <style>
-            :root {
-                --primary-color: #66b3ff;
-                --background: #000;
-                --text-color: #fff;
-            }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friendship Story</title>
+    
+    <style>
+        :root {
+            --primary-color: #66b3ff;
+            --background: #000;
+            --text-color: #fff;
+        }
 
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-                font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            cursor: default; /* This would override specific cursor styles */
+        }
 
-            body {
-                color: var(--text-color);
-                min-height: 100vh;
-                position: relative;
-                overflow-x: hidden;
-                background: #000;
-                margin: 0;
-                padding: 0;
-            }
+        body {
+            color: var(--text-color);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            background: #000;
+            margin: 0;
+            padding: 0;
+        }
 
-            @keyframes gradientBG {
-                0% {
-                    background-position: 0% 0%, 0% 0%;
-                }
-                50% {
-                    background-position: 100% 100%, 100% 100%;
-                }
-                100% {
-                    background-position: 0% 0%, 0% 0%;
-                }
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 0%, 0% 0%;
             }
+            50% {
+                background-position: 100% 100%, 100% 100%;
+            }
+            100% {
+                background-position: 0% 0%, 0% 0%;
+            }
+        }
 
-            /* Add cursor bubble effect */
-            body::after {
-                content: '';
-                position: fixed;
-                width: 200px;
-                height: 200px;
-                background: radial-gradient(circle at center, 
-                    rgba(0, 153, 255, 0.15),
-                    rgba(0, 153, 255, 0.1),
-                    transparent 70%);
+        /* Add cursor bubble effect */
+        body::after {
+            content: '';
+            position: fixed;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle at center, 
+                rgba(0, 153, 255, 0.15),
+                rgba(0, 153, 255, 0.1),
+                transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: all 0.1s ease;
+            mix-blend-mode: screen;
+        }
+
+        /* Add morphing background shapes */
+        .background-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            background: transparent;
+        }
+
+        .shape {
+            position: absolute;
+            background: linear-gradient(45deg, rgba(0, 153, 255, 0.15), rgba(0, 153, 255, 0.1));
+            border-radius: 50%;
+            filter: blur(60px);
+            animation: morphing 20s ease-in-out infinite;
+            opacity: 0.5;
+        }
+
+        .shape:nth-child(1) {
+            top: -15%;
+            left: -15%;
+            width: 50%;
+            height: 50%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            top: 25%;
+            right: -15%;
+            width: 40%;
+            height: 40%;
+            animation-delay: -5s;
+        }
+
+        .shape:nth-child(3) {
+            bottom: -15%;
+            left: 25%;
+            width: 45%;
+            height: 45%;
+            animation-delay: -10s;
+        }
+
+        @keyframes morphing {
+            0% {
                 border-radius: 50%;
-                pointer-events: none;
-                z-index: 9999;
-                transform: translate(-50%, -50%);
-                transition: all 0.1s ease;
-                mix-blend-mode: screen;
+                transform: translate(0, 0) rotate(0deg);
             }
-
-            /* Add morphing background shapes */
-            .background-shapes {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                overflow: hidden;
-                z-index: 1;
-                background: transparent;
+            25% {
+                border-radius: 40% 60% 60% 40% / 40% 60% 60% 40%;
+                transform: translate(5%, 5%) rotate(45deg);
             }
-
-            .shape {
-                position: absolute;
-                background: linear-gradient(45deg, rgba(0, 153, 255, 0.15), rgba(0, 153, 255, 0.1));
+            50% {
+                border-radius: 60% 40% 40% 60% / 60% 40% 60% 40%;
+                transform: translate(0, 10%) rotate(90deg);
+            }
+            75% {
+                border-radius: 40% 60% 60% 40% / 60% 40% 60% 40%;
+                transform: translate(-5%, 5%) rotate(135deg);
+            }
+            100% {
                 border-radius: 50%;
-                filter: blur(60px);
-                animation: morphing 20s ease-in-out infinite;
-                opacity: 0.5;
+                transform: translate(0, 0) rotate(180deg);
             }
+        }
 
-            .shape:nth-child(1) {
-                top: -15%;
-                left: -15%;
-                width: 50%;
-                height: 50%;
-                animation-delay: 0s;
+        /* Navigation */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 1.2rem;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border-radius: 100px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: fixed;
+            top: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: calc(100% - 4rem);
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 500;
+            letter-spacing: -0.5px;
+            padding-left: 1rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            padding: 0.5rem 1.5rem;
+            border-radius: 100px;
+            margin: 0 1rem;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+            font-size: 0.9rem;
+            text-transform: lowercase;
+            letter-spacing: 0.5px;
+            font-weight: 400;
+            padding: 0.3rem 0.8rem;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 100px;
+        }
+
+        .about-btn {
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.6rem 1.2rem;
+            color: var(--text-color);
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            overflow: hidden;
+            margin-right: 1rem;
+        }
+
+        /* Restore the original glowing border animation */
+        .about-btn::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, #66b3ff, transparent, #66b3ff);
+            border-radius: 50px;
+            z-index: -1;
+            animation: glowing 1.5s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        @keyframes glowing {
+            0% {
+                transform: rotate(0deg);
             }
-
-            .shape:nth-child(2) {
-                top: 25%;
-                right: -15%;
-                width: 40%;
-                height: 40%;
-                animation-delay: -5s;
+            100% {
+                transform: rotate(360deg);
             }
+        }
 
-            .shape:nth-child(3) {
-                bottom: -15%;
-                left: 25%;
-                width: 45%;
-                height: 45%;
-                animation-delay: -10s;
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: 0;
+            background: radial-gradient(circle at center, rgba(0, 153, 255, 0.2), transparent 50%),
+                        linear-gradient(135deg, #000000, #001F3F);
+            background-size: 150% 150%, 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Remove the before and after pseudo-elements that were creating gaps */
+        .hero::after,
+        .hero::before {
+            display: none;
+        }
+
+        .title {
+            font-size: 5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #fff, var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .dot {
+            color: var(--primary-color);
+            -webkit-text-fill-color: var(--primary-color);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Button styles */
+        .primary-btn, .secondary-btn {
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            position: relative;
+            z-index: 10; /* Ensure buttons are clickable */
+        }
+
+        .primary-btn {
+            background: var(--primary-color);
+            border: none;
+            color: var(--background);
+        }
+
+        .secondary-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-color);
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 179, 255, 0.3);
+        }
+
+        .secondary-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Make sure all interactive elements are clickable */
+        .navbar, .nav-links, .about-btn, .cta-buttons {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Ensure background doesn't interfere with clicks */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Allow clicks to pass through */
+            z-index: 1;
+        }
+
+        /* Team Section */
+        .team {
+            margin-top: 100vh;
+            position: relative;
+            background: #000;
+            padding: 6rem 4rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease;
+        }
+
+        .team.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Add side gradients */
+        .team::before,
+        .team::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 15%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .team::before {
+            left: 0;
+            background: linear-gradient(to right, #000, transparent);
+        }
+
+        .team::after {
+            right: 0;
+            background: linear-gradient(to left, #000, transparent);
+        }
+
+        .team-title {
+            font-size: 5rem;
+            margin-bottom: 4rem;
+            margin-left: 2rem;
+            background: linear-gradient(to right, #fff, var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            z-index: 3;
+            position: relative;
+        }
+
+        .team-grid {
+            display: flex;
+            gap: 4rem;
+            padding: 2rem;
+            animation: slideTeam 30s linear infinite;
+            width: max-content;
+        }
+
+        @keyframes slideTeam {
+            0% {
+                transform: translateX(0);
             }
-
-            @keyframes morphing {
-                0% {
-                    border-radius: 50%;
-                    transform: translate(0, 0) rotate(0deg);
-                }
-                25% {
-                    border-radius: 40% 60% 60% 40% / 40% 60% 60% 40%;
-                    transform: translate(5%, 5%) rotate(45deg);
-                }
-                50% {
-                    border-radius: 60% 40% 40% 60% / 60% 40% 60% 40%;
-                    transform: translate(0, 10%) rotate(90deg);
-                }
-                75% {
-                    border-radius: 40% 60% 60% 40% / 60% 40% 60% 40%;
-                    transform: translate(-5%, 5%) rotate(135deg);
-                }
-                100% {
-                    border-radius: 50%;
-                    transform: translate(0, 0) rotate(180deg);
-                }
-            }
-
-            /* Navigation */
-            .navbar {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 0.8rem 1.2rem;
-                background: rgba(255, 255, 255, 0.03);
-                backdrop-filter: blur(10px);
-                border-radius: 100px;
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                position: fixed;
-                top: 1rem;
-                left: 50%;
+            100% {
                 transform: translateX(-50%);
-                z-index: 1000;
-                width: calc(100% - 4rem);
             }
+        }
 
-            .logo {
-                font-size: 1.3rem;
-                font-weight: 500;
-                letter-spacing: -0.5px;
-                padding-left: 1rem;
-            }
+        .team-member {
+            min-width: 300px;
+            padding: 2rem;
+            background: rgba(30, 30, 30, 0.3);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
 
-            .nav-links {
-                display: flex;
-                gap: 2rem;
-                padding: 0.5rem 1.5rem;
-                border-radius: 100px;
-                margin: 0 1rem;
-            }
+        .member-image {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
 
-            .nav-links a {
-                color: var(--text-color);
-                text-decoration: none;
-                opacity: 0.7;
-                transition: opacity 0.3s;
-                font-size: 0.9rem;
-                text-transform: lowercase;
-                letter-spacing: 0.5px;
-                font-weight: 400;
-                padding: 0.3rem 0.8rem;
-            }
+        .member-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-            .nav-links a:hover {
-                opacity: 1;
-                background: rgba(255, 255, 255, 0.05);
-                border-radius: 100px;
-            }
+        .member-role {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+            opacity: 0.7;
+        }
 
-            .about-btn {
-                position: relative;
-                background: rgba(255, 255, 255, 0.05);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                padding: 0.6rem 1.2rem;
-                color: var(--text-color);
-                border-radius: 50px;
-                cursor: pointer;
-                font-size: 0.9rem;
-                transition: all 0.3s;
-                overflow: hidden;
-                margin-right: 1rem;
-            }
+        .member-name {
+            color: #fff;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
 
-            /* Restore the original glowing border animation */
-            .about-btn::before {
-                content: '';
-                position: absolute;
-                inset: -2px;
-                background: linear-gradient(45deg, #66b3ff, transparent, #66b3ff);
-                border-radius: 50px;
-                z-index: -1;
-                animation: glowing 1.5s linear infinite;
-                opacity: 0;
-                transition: opacity 0.3s;
-            }
+        /* Update the background shapes */
+        .team-member::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                45deg,
+                rgba(255, 255, 255, 0.03),
+                rgba(255, 255, 255, 0.05)
+            );
+            border-radius: 20px;
+            z-index: 0;
+        }
 
-            @keyframes glowing {
-                0% {
-                    transform: rotate(0deg);
-                }
-                100% {
-                    transform: rotate(360deg);
-                }
-            }
+        /* Duplicate team members for infinite scroll */
+        .team-grid {
+            display: flex;
+            animation: slideTeam 30s linear infinite;
+        }
 
-            /* Hero Section */
-            .hero {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                min-height: 100vh;
-                text-align: center;
-                position: absolute;
-                width: 100%;
-                left: 0;
-                top: 0;
-                background: radial-gradient(circle at center, rgba(0, 153, 255, 0.2), transparent 50%),
-                            linear-gradient(135deg, #000000, #001F3F);
-                background-size: 150% 150%, 400% 400%;
-                animation: gradientBG 15s ease infinite;
-                margin: 0;
-                padding: 0;
-            }
+        .team-grid > * {
+            flex-shrink: 0;
+        }
 
-            /* Remove the before and after pseudo-elements that were creating gaps */
-            .hero::after,
-            .hero::before {
-                display: none;
-            }
+        /* Clone the team members in JavaScript for infinite scroll */
 
-            .title {
-                font-size: 5rem;
-                font-weight: bold;
-                margin-bottom: 1rem;
-                background: linear-gradient(to right, #fff, var(--primary-color));
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-            }
+        /* Process Section */
+        .process {
+            background: #000;
+            padding: 8rem 4rem;
+            min-height: 100vh;
+            position: relative;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease;
+        }
 
-            .dot {
-                color: var(--primary-color);
-                -webkit-text-fill-color: var(--primary-color);
-            }
+        .process.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-            .subtitle {
-                font-size: 1.2rem;
-                opacity: 0.8;
-                margin-bottom: 2rem;
-            }
+        .process-title {
+            font-size: 5rem;
+            margin-bottom: 6rem;
+            margin-left: 2rem;
+            background: linear-gradient(to right, #fff, var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-            .cta-buttons {
-                display: flex;
-                gap: 1rem;
-            }
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
 
-            /* Button styles */
-            .primary-btn, .secondary-btn {
-                padding: 1rem 2rem;
-                border-radius: 5px;
-                cursor: pointer;
-                font-size: 1rem;
-                transition: all 0.3s;
-                position: relative;
-                z-index: 10; /* Ensure buttons are clickable */
-            }
+        .process-card {
+            background: rgba(30, 30, 30, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            position: relative;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
 
-            .primary-btn {
-                background: var(--primary-color);
-                border: none;
-                color: var(--background);
-            }
+        .process-card:hover {
+            transform: translateY(-10px);
+        }
 
-            .secondary-btn {
-                background: transparent;
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                color: var(--text-color);
-            }
+        .number {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #fff, var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+            font-family: 'Inter', monospace;
+        }
 
-            .primary-btn:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 5px 15px rgba(102, 179, 255, 0.3);
-            }
+        .process-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
 
-            .secondary-btn:hover {
-                background: rgba(255, 255, 255, 0.1);
-            }
+        .process-card p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            font-size: 1rem;
+        }
 
-            /* Make sure all interactive elements are clickable */
-            .navbar, .nav-links, .about-btn, .cta-buttons {
-                position: relative;
-                z-index: 10;
-            }
+        /* Add subtle glow effect on hover */
+        .process-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(102, 179, 255, 0.1),
+                transparent
+            );
+            border-radius: 20px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
 
-            /* Ensure background doesn't interfere with clicks */
-            body::before {
-                content: '';
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                pointer-events: none; /* Allow clicks to pass through */
-                z-index: 1;
-            }
+        .process-card:hover::before {
+            opacity: 1;
+        }
 
-            /* Team Section */
-            .team {
-                margin-top: 100vh;
-                position: relative;
-                background: #000;
-                padding: 6rem 4rem;
-                min-height: 100vh;
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                overflow: hidden;
-                opacity: 0;
-                transform: translateY(50px);
-                transition: all 1s ease;
-            }
-
-            .team.active {
-                opacity: 1;
-                transform: translateY(0);
-            }
-
-            /* Add side gradients */
-            .team::before,
-            .team::after {
-                content: '';
-                position: absolute;
-                top: 0;
-                width: 15%;
-                height: 100%;
-                z-index: 2;
-                pointer-events: none;
-            }
-
-            .team::before {
-                left: 0;
-                background: linear-gradient(to right, #000, transparent);
-            }
-
-            .team::after {
-                right: 0;
-                background: linear-gradient(to left, #000, transparent);
-            }
-
-            .team-title {
-                font-size: 5rem;
-                margin-bottom: 4rem;
-                margin-left: 2rem;
-                background: linear-gradient(to right, #fff, var(--primary-color));
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                z-index: 3;
-                position: relative;
-            }
-
-            .team-grid {
-                display: flex;
-                gap: 4rem;
-                padding: 2rem;
-                animation: slideTeam 30s linear infinite;
-                width: max-content;
-            }
-
-            @keyframes slideTeam {
-                0% {
-                    transform: translateX(0);
-                }
-                100% {
-                    transform: translateX(-50%);
-                }
-            }
-
-            .team-member {
-                min-width: 300px;
-                padding: 2rem;
-                background: rgba(30, 30, 30, 0.3);
-                border-radius: 20px;
-                backdrop-filter: blur(10px);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                position: relative;
-            }
-
-            .member-image {
-                width: 150px;
-                height: 150px;
-                margin: 0 auto 1.5rem;
-                position: relative;
-                z-index: 1;
-            }
-
-            .member-image img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-
-            .member-role {
-                color: var(--primary-color);
-                font-size: 0.9rem;
-                text-transform: uppercase;
-                letter-spacing: 2px;
-                margin-bottom: 0.5rem;
-                opacity: 0.7;
-            }
-
-            .member-name {
-                color: #fff;
-                font-size: 2rem;
-                font-weight: 600;
-                margin-bottom: 0.5rem;
-            }
-
-            /* Update the background shapes */
-            .team-member::before {
-                content: '';
-                position: absolute;
-                inset: 0;
-                background: linear-gradient(
-                    45deg,
-                    rgba(255, 255, 255, 0.03),
-                    rgba(255, 255, 255, 0.05)
-                );
-                border-radius: 20px;
-                z-index: 0;
-            }
-
-            /* Duplicate team members for infinite scroll */
-            .team-grid {
-                display: flex;
-                animation: slideTeam 30s linear infinite;
-            }
-
-            .team-grid > * {
-                flex-shrink: 0;
-            }
-
-            /* Clone the team members in JavaScript for infinite scroll */
-
-            /* Process Section */
-            .process {
-                background: #000;
-                padding: 8rem 4rem;
-                min-height: 100vh;
-                position: relative;
-                opacity: 0;
-                transform: translateY(50px);
-                transition: all 1s ease;
-            }
-
-            .process.active {
-                opacity: 1;
-                transform: translateY(0);
-            }
-
-            .process-title {
-                font-size: 5rem;
-                margin-bottom: 6rem;
-                margin-left: 2rem;
-                background: linear-gradient(to right, #fff, var(--primary-color));
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-            }
-
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
             .process-grid {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 3rem;
-                max-width: 1400px;
-                margin: 0 auto;
+                grid-template-columns: repeat(2, 1fr);
             }
+        }
 
-            .process-card {
-                background: rgba(30, 30, 30, 0.3);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                border-radius: 20px;
-                padding: 2.5rem;
-                position: relative;
-                backdrop-filter: blur(10px);
-                transition: transform 0.3s ease;
+        @media (max-width: 768px) {
+            .process-grid {
+                grid-template-columns: 1fr;
             }
-
-            .process-card:hover {
-                transform: translateY(-10px);
-            }
-
-            .number {
+            .process-title {
                 font-size: 3rem;
-                font-weight: 700;
-                background: linear-gradient(to right, #fff, var(--primary-color));
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                margin-bottom: 1.5rem;
-                font-family: 'Inter', monospace;
             }
+        }
 
-            .process-card h3 {
-                font-size: 1.8rem;
-                margin-bottom: 1rem;
-                color: #fff;
-            }
+        /* Add base reveal animation styles */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease;
+        }
 
-            .process-card p {
-                color: rgba(255, 255, 255, 0.7);
-                line-height: 1.6;
-                font-size: 1rem;
-            }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-            /* Add subtle glow effect on hover */
-            .process-card::before {
-                content: '';
-                position: absolute;
-                inset: 0;
-                background: linear-gradient(
-                    45deg,
-                    transparent,
-                    rgba(102, 179, 255, 0.1),
-                    transparent
-                );
-                border-radius: 20px;
-                z-index: -1;
-                opacity: 0;
-                transition: opacity 0.3s ease;
-            }
+        /* Smooth scroll behavior to html */
+        html {
+            scroll-behavior: smooth;
+        }
 
-            .process-card:hover::before {
-                opacity: 1;
-            }
+        /* Footer Styles */
+        .footer {
+            background: rgba(30, 30, 30, 0.3);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 4rem 4rem 2rem;
+            margin-top: 4rem;
+        }
 
-            /* Responsive adjustments */
-            @media (max-width: 1200px) {
-                .process-grid {
-                    grid-template-columns: repeat(2, 1fr);
-                }
-            }
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            gap: 4rem;
+        }
 
-            @media (max-width: 768px) {
-                .process-grid {
-                    grid-template-columns: 1fr;
-                }
-                .process-title {
-                    font-size: 3rem;
-                }
-            }
+        .footer-left {
+            flex: 1;
+        }
 
-            /* Add base reveal animation styles */
-            .reveal {
-                opacity: 0;
-                transform: translateY(50px);
-                transition: all 1s ease;
-            }
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
 
-            .reveal.active {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .footer-description {
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 300px;
+            line-height: 1.6;
+        }
 
-            /* Smooth scroll behavior to html */
-            html {
-                scroll-behavior: smooth;
-            }
+        .footer-right {
+            display: flex;
+            gap: 4rem;
+        }
 
-            /* Footer Styles */
-            .footer {
-                background: rgba(30, 30, 30, 0.3);
-                backdrop-filter: blur(10px);
-                border-top: 1px solid rgba(255, 255, 255, 0.1);
-                padding: 4rem 4rem 2rem;
-                margin-top: 4rem;
-            }
+        .footer-links, .footer-social {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
 
+        .footer-links a, .footer-social a {
+            color: var(--text-color);
+            text-decoration: none;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover, .footer-social a:hover {
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive footer */
+        @media (max-width: 768px) {
             .footer-content {
-                max-width: 1400px;
-                margin: 0 auto;
-                display: flex;
-                justify-content: space-between;
-                gap: 4rem;
-            }
-
-            .footer-left {
-                flex: 1;
-            }
-
-            .footer-logo {
-                font-size: 1.5rem;
-                font-weight: 500;
-                margin-bottom: 1rem;
-            }
-
-            .footer-description {
-                color: rgba(255, 255, 255, 0.7);
-                max-width: 300px;
-                line-height: 1.6;
+                flex-direction: column;
+                gap: 2rem;
             }
 
             .footer-right {
-                display: flex;
-                gap: 4rem;
-            }
-
-            .footer-links, .footer-social {
-                display: flex;
                 flex-direction: column;
-                gap: 1rem;
+                gap: 2rem;
             }
 
-            .footer-links a, .footer-social a {
-                color: var(--text-color);
-                text-decoration: none;
-                opacity: 0.7;
-                transition: opacity 0.3s;
+            .footer {
+                padding: 3rem 2rem 1.5rem;
             }
+        }
 
-            .footer-links a:hover, .footer-social a:hover {
-                opacity: 1;
+        .hover-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            z-index: 2;
+        }
+
+        .hover-cell {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .hover-cell::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .hover-cell:hover::before {
+            opacity: 1;
+        }
+
+        /* Hover Lines */
+        .hover-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .hover-line-horizontal,
+        .hover-line-vertical {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .hover-line-horizontal {
+            width: 100%;
+            height: 1px;
+        }
+
+        .hover-line-vertical {
+            width: 1px;
+            height: 100%;
+        }
+
+        /* Position the lines */
+        .hover-line-horizontal:nth-child(1) { top: 33.33%; }
+        .hover-line-horizontal:nth-child(2) { top: 66.66%; }
+        .hover-line-vertical:nth-child(3) { left: 33.33%; }
+        .hover-line-vertical:nth-child(4) { left: 66.66%; }
+
+        .hover-cell {
+            cursor: pointer;
+        }
+
+        .hover-cell:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .hover-test {
+            width: 200px;
+            height: 200px;
+            background-color: lightblue;
+            cursor: pointer; /* Ensure cursor is set */
+        }
+
+        .hover-test:hover {
+            background-color: lightcoral; /* Change color on hover */
+        }
+        
+        .cursor {
+            position: fixed;
+            left: -5px;
+            top: -5px;
+            width: 10px;
+            height: 10px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: width 0.3s ease, height 0.3s ease;
+            will-change: transform;
+            mix-blend-mode: exclusion;
+        }
+
+        .cursor-follower {
+            position: fixed;
+            left: -20px;
+            top: -20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid white;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transition: all 0.3s ease;
+            will-change: transform;
+            mix-blend-mode: exclusion;
+        }
+
+        .cursor.active {
+            width: 20px;
+            height: 20px;
+            left: -10px;
+            top: -10px;
+            background: white;
+        }
+
+        .cursor-follower.active {
+            width: 50px;
+            height: 50px;
+            left: -25px;
+            top: -25px;
+            border-width: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .cursor, .cursor-follower {
+                display: none;
             }
-
-            .footer-bottom {
-                margin-top: 3rem;
-                padding-top: 2rem;
-                border-top: 1px solid rgba(255, 255, 255, 0.1);
-                text-align: center;
-                color: rgba(255, 255, 255, 0.5);
-                font-size: 0.9rem;
+            body {
+                cursor: auto;
             }
+        }
 
-            /* Responsive footer */
-            @media (max-width: 768px) {
-                .footer-content {
-                    flex-direction: column;
-                    gap: 2rem;
-                }
+        /* This will override a general rule */
+        .hover-cell {
+            cursor: pointer; /* Ensure this is applied */
+        }
+    </style>
+    <!-- Add these cursor elements right after body tag -->
+    <div id="cursor" class="cursor"></div>
+    <div id="cursor-follower" class="cursor-follower"></div>
 
-                .footer-right {
-                    flex-direction: column;
-                    gap: 2rem;
-                }
-
-                .footer {
-                    padding: 3rem 2rem 1.5rem;
-                }
-            }
-        </style>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    </head>
-    <body>
-        <div class="background-shapes">
-            <div class="shape"></div>
-            <div class="shape"></div>
-            <div class="shape"></div>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <nav class="navbar">
+        <div class="logo">* Friendship</div>
+        <div class="nav-links">
+            <a href="#home">home</a>
+            <a href="#person1">person 1</a>
+            <a href="#person2">person 2</a>
+            <a href="#person3">person 3</a>
+            <a href="#funfact">funfact</a>
         </div>
-        <nav class="navbar">
-            <div class="logo">* Friendship</div>
-            <div class="nav-links">
-                <a href="index.html">home</a>
-                <a href="affan.html">affan</a>
-                <a href="seyf.html">seyf</a>
-                <a href="radhit.html">radhit</a>
-            </div>
-            <button class="about-btn">About Us</button>
-        </nav>
+        <button class="about-btn">About Us</button>
+    </nav>
 
-        <main class="hero">
-            <h1 class="title">Three Friends<span class="dot">.</span></h1>
-            <p class="subtitle">A story of friendship, memories, and endless adventures.</p>
-            
-            <div class="cta-buttons">
-                <button class="primary-btn">Our Story</button>
-                <button class="secondary-btn">Meet Us →</button>
-            </div>
-        </main>
+    <main class="hero">
+        <h1 class="title">Three Friends<span class="dot">.</span></h1>
+        <p class="subtitle">A story of friendship, memories, and endless adventures.</p>
+        
+        <div class="cta-buttons">
+            <button class="primary-btn">Our Story</button>
+            <button class="secondary-btn">Meet Us →</button>
+        </div>
+    </main>
 
-        <!-- Team Section -->
-        <section class="team">
-            <h2 class="team-title">Meet our team<span class="dot">.</span></h2>
-            <div class="team-grid">
-                <div class="team-member">
-                    <div class="member-image">
-                        <img src="person1.jpg" alt="Affan">
-                    </div>
-                    <span class="member-role">Person 1</span>
-                    <h3 class="member-name">Affan</h3>
+    <!-- Team Section -->
+    <section class="team">
+        <h2 class="team-title">Meet our team<span class="dot">.</span></h2>
+        <div class="team-grid">
+            <div class="team-member">
+                <div class="member-image">
+                    <img src="person1.jpg" alt="Affan">
                 </div>
-                <div class="team-member">
-                    <div class="member-image">
-                        <img src="person2.jpg" alt="Seyf">
-                    </div>
-                    <span class="member-role">Person 2</span>
-                    <h3 class="member-name">Seyf</h3>
-                </div>
-                <div class="team-member">
-                    <div class="member-image">
-                        <img src="person3.jpg" alt="Radhit">
-                    </div>
-                    <span class="member-role">Person 3</span>
-                    <h3 class="member-name">Radhit</h3>
-                </div>
+                <span class="member-role">Person 1</span>
+                <h3 class="member-name">Affan</h3>
             </div>
-        </section>
-
-        <!-- Process Section -->
-        <section class="process">
-            <h2 class="process-title">Our Process<span class="dot">.</span></h2>
-            <div class="process-grid">
-                <div class="process-card">
-                    <div class="number">01</div>
-                    <h3>Meeting</h3>
-                    <p>It all started with a chance encounter in our lives, where we discovered shared interests and values that would form the foundation of our friendship.</p>
+            <div class="team-member">
+                <div class="member-image">
+                    <img src="person2.jpg" alt="Seyf">
                 </div>
-                <div class="process-card">
-                    <div class="number">02</div>
-                    <h3>Building Bonds</h3>
-                    <p>Through shared experiences, adventures, and countless memories, we've built strong bonds that continue to grow stronger with each passing day.</p>
-                </div>
-                <div class="process-card">
-                    <div class="number">03</div>
-                    <h3>Growing Together</h3>
-                    <p>As we continue our journey, we support each other's growth, celebrate successes, and face challenges together as true friends.</p>
-                </div>
+                <span class="member-role">Person 2</span>
+                <h3 class="member-name">Seyf</h3>
             </div>
-        </section>
-
-        <!-- Footer Section -->
-        <footer class="footer">
-            <div class="footer-content">
-                <div class="footer-left">
-                    <div class="footer-logo">* Friendship</div>
-                    <p class="footer-description">A story of friendship, memories, and endless adventures.</p>
+            <div class="team-member">
+                <div class="member-image">
+                    <img src="person3.jpg" alt="Radhit">
                 </div>
-                <div class="footer-right">
-                    <div class="footer-links">
-                        <a href="#home">Home</a>
-                        <a href="#affan">Affan</a>
-                        <a href="#seyf">Seyf</a>
-                        <a href="#radhit">Radhit</a>
-                    </div>
-                    <div class="footer-social">
-                        <a href="#" class="social-link">Instagram</a>
-                        <a href="#" class="social-link">Twitter</a>
-                        <a href="#" class="social-link">LinkedIn</a>
-                    </div>
+                <span class="member-role">Person 3</span>
+                <h3 class="member-name">Radhit</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process">
+        <h2 class="process-title">Our Process<span class="dot">.</span></h2>
+        <div class="process-grid">
+            <div class="process-card">
+                <div class="number">01</div>
+                <h3>Meeting</h3>
+                <p>It all started with a chance encounter in our lives, where we discovered shared interests and values that would form the foundation of our friendship.</p>
+            </div>
+            <div class="process-card">
+                <div class="number">02</div>
+                <h3>Building Bonds</h3>
+                <p>Through shared experiences, adventures, and countless memories, we've built strong bonds that continue to grow stronger with each passing day.</p>
+            </div>
+            <div class="process-card">
+                <div class="number">03</div>
+                <h3>Growing Together</h3>
+                <p>As we continue our journey, we support each other's growth, celebrate successes, and face challenges together as true friends.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <div class="footer-logo">* Friendship</div>
+                <p class="footer-description">A story of friendship, memories, and endless adventures.</p>
+            </div>
+            <div class="footer-right">
+                <div class="footer-links">
+                    <a href="#home">Home</a>
+                    <a href="#affan">Affan</a>
+                    <a href="#seyf">Seyf</a>
+                    <a href="#radhit">Radhit</a>
+                </div>
+                <div class="footer-social">
+                    <a href="#" class="social-link">Instagram</a>
+                    <a href="#" class="social-link">Twitter</a>
+                    <a href="#" class="social-link">LinkedIn</a>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Friendship Story. All rights reserved.</p>
-            </div>
-        </footer>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Friendship Story. All rights reserved.</p>
+        </div>
+    </footer>
 
-        <script>
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.3
-            };
+    
 
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        
-                        // If it's the team section, animate its children
-                        if (entry.target.classList.contains('team')) {
-                            const members = entry.target.querySelectorAll('.team-member');
-                            members.forEach((member, index) => {
-                                setTimeout(() => {
-                                    member.classList.add('visible');
-                                }, index * 200); // Stagger the animations
-                            });
-                        }
-                    }
-                });
-            }, observerOptions);
+    <script>
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.3
+        };
 
-            // Observe the team section
-            observer.observe(document.querySelector('.team'));
-
-            // Clone team members for infinite scroll
-            const teamGrid = document.querySelector('.team-grid');
-            const members = document.querySelectorAll('.team-member');
-            
-            // Clone the members and append them to create the infinite scroll effect
-            members.forEach(member => {
-                const clone = member.cloneNode(true);
-                teamGrid.appendChild(clone);
-            });
-
-            // Scroll reveal function
-            function reveal() {
-                var reveals = document.querySelectorAll('.team, .process');
-                
-                reveals.forEach(element => {
-                    var windowHeight = window.innerHeight;
-                    var elementTop = element.getBoundingClientRect().top;
-                    var elementVisible = 150; // Adjust this value to change when the animation triggers
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
                     
-                    if (elementTop < windowHeight - elementVisible) {
-                        element.classList.add('active');
+                    // If it's the team section, animate its children
+                    if (entry.target.classList.contains('team')) {
+                        const members = entry.target.querySelectorAll('.team-member');
+                        members.forEach((member, index) => {
+                            setTimeout(() => {
+                                member.classList.add('visible');
+                            }, index * 200); // Stagger the animations
+                        });
                     }
-                });
-            }
-
-            // Add scroll event listener
-            window.addEventListener('scroll', reveal);
-            
-            // Initial check for elements in view
-            reveal();
-
-            // Smooth scroll for navigation links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const section = document.querySelector(this.getAttribute('href'));
-                    section.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center' // Scroll to center
-                    });
-                });
+                }
             });
-        </script>
-    </body>
+        }, observerOptions);
+
+        // Observe the team section
+        observer.observe(document.querySelector('.team'));
+
+        // Clone team members for infinite scroll
+        const teamGrid = document.querySelector('.team-grid');
+        const members = document.querySelectorAll('.team-member');
+        
+        // Clone the members and append them to create the infinite scroll effect
+        members.forEach(member => {
+            const clone = member.cloneNode(true);
+            teamGrid.appendChild(clone);
+        });
+
+        // Scroll reveal function
+        function reveal() {
+            var reveals = document.querySelectorAll('.team, .process');
+            
+            reveals.forEach(element => {
+                var windowHeight = window.innerHeight;
+                var elementTop = element.getBoundingClientRect().top;
+                var elementVisible = 150; // Adjust this value to change when the animation triggers
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        }
+
+        // Add scroll event listener
+        window.addEventListener('scroll', reveal);
+        
+        // Initial check for elements in view
+        reveal();
+
+     const cursor = document.getElementById('cursor');
+    const cursorFollower = document.getElementById('cursor-follower');
+
+    document.addEventListener('mousemove', (e) => {
+      const posX = e.clientX;
+      const posY = e.clientY;
+
+      // Move the main cursor
+      cursor.style.transform = `translate3d(${posX}px, ${posY}px, 0)`;
+
+      // Move the follower with slight delay
+      setTimeout(() => {
+        cursorFollower.style.transform = `translate3d(${posX}px, ${posY}px, 0)`;
+      }, 80);
+    });
+
+    // Add hover effects for interactive elements
+    const links = document.querySelectorAll('a, button, .blog-card');
+    
+    links.forEach(link => {
+      link.addEventListener('mouseenter', () => {
+        cursor.classList.add('active');
+        cursorFollower.classList.add('active');
+      });
+      
+      link.addEventListener('mouseleave', () => {
+        cursor.classList.remove('active');
+        cursorFollower.classList.remove('active');
+      });
+    });
+
+    </script>
+</body>
