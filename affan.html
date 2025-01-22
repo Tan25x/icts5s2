@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Captured Photography</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+      cursor: none !important;
+    }
+
+    header {
+      background-color: #000;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 24px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .hero {
+      position: relative;
+      text-align: center;
+      color: white;
+    }
+
+    .hero img {
+      width: 100%;
+      height: auto;
+      filter: brightness(50%);
+    }
+
+    .hero-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 36px;
+      font-weight: bold;
+    }
+
+    .section {
+      color: black;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .section h1 {
+      font-size: 2rem;
+    }
+
+    .section p {
+      font-size: 1rem;
+    }
+
+    .features {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+
+    .feature {
+      flex: 1 1 calc(30% - 20px);
+      margin: 10px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      text-align: left;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      background-color: #f3f3f3;
+      padding: 40px 20px;
+    }
+
+    .stat {
+      flex: 1 1 calc(25% - 20px);
+      text-align: center;
+      margin: 10px;
+    }
+
+    .stat h2 {
+      font-size: 48px;
+      margin: 10px 0;
+      color: #333;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      padding: 20px;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .testimonial {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .testimonial-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .testimonial-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    .profile-image {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .cta-card {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      margin-top: 2rem;
+    }
+
+    .available-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #f0f0f0;
+      padding: 0.5rem 1rem;
+      border-radius: 100px;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .cta-image {
+      width: 100%;
+      border-radius: 8px;
+      margin: 1rem 0;
+    }
+
+    .services-section {
+      background-color: #000;
+      color: #fff;
+      padding: 6rem 2rem;
+      min-height: 100vh;
+    }
+
+    .services-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+
+    .services-left {
+      max-width: 400px;
+    }
+
+    .services-title {
+      font-size: 4rem;
+      font-weight: 500;
+      margin: 0 0 1.5rem 0;
+      color: #fff;
+    }
+
+    .services-description {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.6);
+      max-width: 400px;
+      margin-bottom: 2rem;
+    }
+
+    .services-link {
+      color: #fff;
+      text-decoration: none;
+      border-bottom: 1px solid #fff;
+      padding-bottom: 4px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .service-column {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .service-item {
+      position: relative;
+      padding: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      transition: background-color 0.3s ease;
+    }
+
+    .service-number {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 0.9rem;
+    }
+
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 10px;
+    }
+
+    .service-item h3 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .service-item p {
+      font-size: 18px;
+      color: #666;
+    }
+
+    .blog-section {
+      padding: 6rem 4rem; /* Increased padding for more space on the sides */
+      background: #000;
+      color: #fff;
+    }
+
+    .blog-container {
+      max-width: 1800px; /* Increased max-width for an even wider layout */
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 2fr 2fr;
+      gap: 4rem; /* Increased gap for more space */
+    }
+
+    .blog-left {
+      grid-column: 1;
+    }
+
+    .blog-title {
+      font-size: 3.5rem;
+    }
+
+    .blog-description {
+      font-size: 1.2rem;
+      color: #666;
+      margin-bottom: 3rem; /* Increased margin for more space below the description */
+    }
+
+    .view-all {
+      background-color: #007BFF;
+      color: rgb(0, 0, 0);
+      padding: 1rem 2rem;
+      border-radius: 100px;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+
+    .blog-grid {
+      grid-column: 2 / 4;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem; /* Adjusted gap for more space */
+      margin-left: auto;
+      margin-top: 2rem; /* Added margin-top for additional space */
+    }
+
+    .blog-card {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 1/1.2;
+      cursor: pointer;
+      width: 100%;
+      padding: 0.5rem; /* Reduced padding for less space inside the card */
+      background-color: #ffffff; /* Changed background color to grey */
+    }
+
+    .blog-card img {
+      width: 100%;
+      height: 650px;
+      object-fit: cover;
+    }
+
+    .blog-date {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+
+    .arrow-icon {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    .blog-content {
+      padding: 1rem;
+    }
+
+    .blog-card-title {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem; /* Decreased margin for less space below the title */
+    }
+
+    .photographer-intro {
+      padding: 6rem 2rem;
+      background-color: #f9f9f9;
+      text-align: left;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .photographer-name {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 0;
+      color: #333;
+    }
+
+    .photographer-title {
+      color: #666;
+      font-size: 0.9rem;
+      margin-top: 0.2rem;
+    }
+
+    .hero-quote {
+      font-size: 3.5rem;
+      line-height: 1.1;
+      font-weight: 500;
+      max-width: 1200px;
+      margin: 4rem 0;
+      color: #333;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-top: 4rem;
+    }
+
+    .description {
+      color: #666;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      max-width: 400px;
+    }
+
+    .cursor {
+      position: fixed;
+      left: -5px;
+      top: -5px;
+      width: 10px;
+      height: 10px;
+      background: white;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transition: width 0.3s ease, height 0.3s ease;
+      will-change: transform;
+      mix-blend-mode: exclusion;
+    }
+
+    .cursor-follower {
+      position: fixed;
+      left: -20px;
+      top: -20px;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid white;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transition: all 0.3s ease;
+      will-change: transform;
+      mix-blend-mode: exclusion;
+    }
+
+    .cursor.active {
+      width: 20px;
+      height: 20px;
+      left: -10px;
+      top: -10px;
+      background: white;
+    }
+
+    .cursor-follower.active {
+      width: 50px;
+      height: 50px;
+      left: -25px;
+      top: -25px;
+      border-width: 2px;
+    }
+
+    @media (max-width: 768px) {
+      .cursor, .cursor-follower {
+        display: none;
+      }
+      body {
+        cursor: auto;
+      }
+    }
+
+    /* Hero Section Styles */
+    .hero-section {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-align: center;
+      margin-bottom: 0;
+    }
+
+    /* Background Image Style */
+    .background-fixed {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('ambi.jpg');
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      z-index: -1;
+    }
+
+    /* Black Bar Style */
+    .black-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+      padding: 15px 0;
+      z-index: 2;
+    }
+
+    /* Text Styles */
+    .hero-text {
+      position: absolute;
+      bottom: 80px;
+      left: 50px;
+      color: #fff;
+      z-index: 2;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .your-story {
+      font-size: 8vw;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .art-focus {
+      font-size: 2vw;
+      text-transform: uppercase;
+      margin-top: 10px;
+    }
+
+    /* Plus Icon */
+    .center-plus {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50px;
+      height: 50px;
+      border: 2px solid rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3;
+    }
+
+    .center-plus::before {
+      content: '+';
+      color: #fff;
+      font-size: 24px;
+    }
+
+    /* Small Circle */
+    .small-circle {
+      position: absolute;
+      bottom: 40%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 10px;
+      border: 2px solid rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      z-index: 3;
+    }
+
+    /* Navigation */
+    .hero-nav {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 3;
+    }
+
+    .nav-logo {
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+    }
+
+    .nav-link {
+      color: #fff;
+      text-decoration: none;
+      opacity: 0.8;
+      transition: opacity 0.3s ease;
+    }
+
+    .nav-link:hover {
+      opacity: 1;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .your-story {
+        font-size: 12vw;
+      }
+      
+      .art-focus {
+        font-size: 4vw;
+      }
+      
+      .captured-text {
+        font-size: 1rem;
+        padding: 8px 20px;
+      }
+      
+      .nav-links {
+        display: none;
+      }
+    }
+
+    /* Hover Overlay Styles */
+    .hover-grid {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      z-index: 2;
+    }
+
+    .hover-cell {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .hover-cell::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .hover-cell:hover::before {
+      opacity: 1;
+    }
+
+    /* Hover Lines */
+    .hover-lines {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hover-line-horizontal,
+    .hover-line-vertical {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .hover-line-horizontal {
+      width: 100%;
+      height: 1px;
+    }
+
+    .hover-line-vertical {
+      width: 1px;
+      height: 100%;
+    }
+
+    /* Position the lines */
+    .hover-line-horizontal:nth-child(1) { top: 33.33%; }
+    .hover-line-horizontal:nth-child(2) { top: 66.66%; }
+    .hover-line-vertical:nth-child(3) { left: 33.33%; }
+    .hover-line-vertical:nth-child(4) { left: 66.66%; }
+
+    /* Quote Section Styles */
+    .quote-section {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 40px;
+      background-color: #f9f9f9;
+    }
+
+    .text-content {
+      width: 100%;
+      margin-bottom: 40px;
+    }
+
+    .photographer-info {
+      margin-bottom: 20px;
+    }
+
+    .photographer-name {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .photographer-title {
+      font-size: 16px;
+      color: #666;
+    }
+
+    .quote-text {
+      font-size: 64px;
+      line-height: 1.2;
+      margin: 20px 0;
+      text-align: left;
+      width: 100%;
+    }
+
+    .additional-info {
+      font-size: 16px;
+      color: #666;
+      max-width: 600px;
+      margin-bottom: 40px;
+    }
+
+    .review-section {
+      max-width: 400px;
+      text-align: left;
+    }
+
+    .rating-section {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .rating {
+      font-size: 16px;
+      color: #333;
+      margin-right: 10px;
+    }
+
+    .stars {
+      color: #ffd700;
+    }
+
+    .image-section {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-start;
+      padding: 40px;
+      background-color: #f9f9f9;
+    }
+
+    .large-image {
+      flex: 2;
+    }
+
+    .small-image {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-left: 300px;
+      margin-top: -20px;
+    }
+
+    .zoom-image {
+      width: 100%;
+      height: auto;
+      transition: transform 0.3s ease;
+      border-radius: 10px;
+    }
+
+    .zoom-image:hover {
+      transform: scale(1.1);
+    }
+
+    .image-caption {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .image-caption h3 {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+
+    .image-caption p {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .services-link {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #333;
+      text-decoration: none;
+      border-bottom: 1px solid #333;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .services-link:hover {
+      opacity: 0.7;
+    }
+
+    /* Keyframes for fade-in and slide-up animation */
+    @keyframes fadeInUp {
+        0% {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Apply animation to the first appearing words */
+    .animated-text {
+        opacity: 0; /* Start hidden */
+        animation: fadeInUp 1s ease-out forwards; /* 1s duration, ease-out timing */
+    }
+
+    .hero-content {
+        z-index: 2;
+        padding: 20px;
+        backdrop-filter: blur(5px);
+    }
+
+    .hero-title {
+        font-size: 6rem; /* Larger font size */
+        margin: 0;
+    }
+
+    .hero-subtitle {
+        font-size: 2rem; /* Larger font size */
+        margin: 10px 0;
+    }
+
+    .hero-button {
+        padding: 10px 20px;
+        background-color: rgba(255, 255, 255, 0.8);
+        color: #333;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+    .hero-button:hover {
+        background-color: rgba(255, 255, 255, 1);
+    }
+
+    /* Image Zoom Effect */
+    .zoom-image {
+        transition: transform 0.3s ease; /* Smooth transition */
+    }
+
+    .zoom-image:hover {
+        transform: scale(1.1); /* Scale image to 110% */
+    }
+
+    .image-section {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-start;
+      padding: 40px;
+      background-color: #f9f9f9;
+    }
+
+   
+
+    .image-caption {
+      text-align: center;
+    }
+
+    .portrait-section {
+      background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+      color: white; /* Text color */
+      text-align: center; /* Center text */
+      padding: 80px 20px; /* Add padding */
+      border-radius: 10px; /* Rounded corners */
+      max-width: 600px; /* Limit width */
+      margin: 40px auto 0; /* Add top margin for space and center the section */
+      position: relative; /* For positioning */
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    .portrait-section h1 {
+      font-size: 2.5rem; /* Adjust font size */
+      margin-bottom: 20px; /* Space below the heading */
+    }
+
+    .portrait-section p {
+      font-size: 1.2rem; /* Adjust font size */
+      max-width: 500px; /* Limit width */
+      margin: 0 auto; /* Center paragraph */
+    }
+
+    /* Footer Styles */
+    .footer {
+            background: rgba(255, 255, 255, 0);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.021);
+            padding: 4rem 4rem 2rem;
+            margin-top: 0;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            gap: 4rem;
+        }
+
+        .footer-left {
+            flex: 1;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .footer-description {
+            color: rgb(255, 255, 255);
+            max-width: 300px;
+            line-height: 1.6;
+        }
+
+        .footer-right {
+            display: flex;
+            gap: 4rem;
+        }
+
+        .footer-links, .footer-social {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-links a, .footer-social a {
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover, .footer-social a:hover {
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgb(255, 255, 255);
+            text-align: center;
+            color: rgb(255, 255, 255);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive footer */
+        @media (max-width: 768px) {
+            .footer-content {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .footer-right {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .footer {
+                padding: 3rem 2rem 1.5rem;
+            }
+        }
+  </style>
+</head>
+<body>
+  <!-- Add these cursor elements right after body tag -->
+  <div id="cursor" class="cursor"></div>
+  <div id="cursor-follower" class="cursor-follower"></div>
+
+  <header>
+    Captured Photography
+  </header>
+
+  <section class="hero-section">
+    <div class="background-fixed"></div>
+    
+    <div class="hero-content">
+        <h1 class="hero-title">
+            <span class="animated-text" data-delay="0s">Welcome to My Photography</span>
+        </h1>
+        <p class="hero-subtitle">
+            <span class="animated-text" data-delay="0.2s">Capturing Moments,</span>
+            <span class="animated-text" data-delay="0.4s">Creating Memories</span>
+        </p>
+        <a href="#portfolio" class="hero-button animated-text" data-delay="0.6s">View Portfolio</a>
+    </div>
+    
+    <!-- Black Bar at Bottom -->
+    <div class="black-bar">
+      Captured Photography
+    </div>
+  </section>
+
+  <section class="quote-section">
+    <div class="text-content">
+        <div class="photographer-info">
+            <h1 class="photographer-name">SAMUEL SPENSER</h1>
+            <p class="photographer-title">Professional Photographer</p>
+        </div>
+
+        <div class="quote-text">
+            <span>"I don't just take photos. I capture the raw emotions, the subtle moments, and the untold stories that make life so beautiful."</span>
+        </div>
+
+        <div class="additional-info">
+            <p>Whether you're celebrating love, family, or personal milestones, I'm here to help you capture it all. Let's tell your story through timeless photography.</p>
+        </div>
+
+        <div class="review-section">
+            <div class="rating-section">
+                <span class="rating">5.0/5</span>
+                <span class="stars">★★★★★</span>
+            </div>
+            <p>"Working with Samuel was seamless. He turned our special day into a gallery of memories that we will cherish forever."</p>
+            <p>Sarah & John, Newlyweds</p>
+        </div>
+    </div>
+
+    <section class="image-section">
+        <div class="large-image">
+            <img src="amba.jpg" alt="Profile" class="zoom-image">
+        </div>
+        <div class="small-image">
+            <img src="amba.jpg" alt="Work" class="zoom-image">
+            <div class="image-caption">
+                <h3>Ready to capture your moments?</h3>
+                <p>Book your photoshoot today and let's turn your vision into timeless art.</p>
+            </div>
+        </div>
+    </section>
+
+    <a href="#work" class="services-link">Check out my work →</a>
+  </section>
+
+  <section class="services-section">
+    <div class="services-container">
+        <div class="services-left">
+            <h2 class="services-title animated-text" data-delay="1.6s">What I can offer</h2>
+            <p class="services-description animated-text" data-delay="1.8s">
+                I provide a range of photography services, capturing moments 
+                that matter most to you.
+            </p>
+            <a href="#work" class="services-link animated-text" data-delay="2s">Check out my work →</a>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-item">
+                <img src="headshot-icon.jpg" alt="" class="service-icon">
+                <div class="service-content">
+                    <h3>Professional Headshots</h3>
+                    <p>Stand out with a polished, professional look.</p>
+                </div>
+                <span class="service-number">01</span>
+            </div>
+
+            <div class="service-item">
+                <img src="portrait-icon.jpg" alt="" class="service-icon">
+                <div class="service-content">
+                    <h3>Portrait Photography</h3>
+                    <p>Capture your best self with beautifully composed portraits.</p>
+                </div>
+                <span class="service-number">04</span>
+            </div>
+
+            <div class="service-item">
+                <img src="events-icon.jpg" alt="" class="service-icon">
+                <div class="service-content">
+                    <h3>Events</h3>
+                    <p>Your day, your story—captured beautifully.</p>
+                </div>
+                <span class="service-number">02</span>
+            </div>
+
+            <div class="service-item">
+                <img src="family-icon.jpg" alt="" class="service-icon">
+                <div class="service-content">
+                    <h3>Family Sessions</h3>
+                    <p>Celebrate your family's unique bond with heartwarming photos.</p>
+                </div>
+                <span class="service-number">05</span>
+            </div>
+
+            <div class="service-item">
+                <img src="weddings-icon.jpg" alt="" class="service-icon">
+                <div class="service-content">
+                    <h3>Weddings</h3>
+                    <p>From the first look to the final dance, you'll relive every moment.</p>
+                </div>
+                <span class="service-number">03</span>
+            </div>
+
+            <div class="service-item">
+                <img src="lifestyle-icon.jpg" alt="" class="service-icon">
+                <div class="service-content">
+                    <h3>Lifestyle Photography</h3>
+                    <p>Showcase the authentic moments of your daily life with story-driven images.</p>
+                </div>
+                <span class="service-number">06</span>
+            </div>
+        </div>
+    </div>
+  </section>
+
+  <section class="portrait-section">
+    <h1>I Capture Stories, Not Just Photos</h1>
+    <p>I don't just take photos; I capture the raw emotions, subtle moments, and untold stories that make life beautiful.</p>
+  </section>
+
+  <section class="section features">
+    <div class="feature">
+      <h2>What I Offer</h2>
+      <p>High-quality photography for every occasion, tailored to your needs.</p>
+    </div>
+    <div class="feature">
+      <h2>Why Choose Me?</h2>
+      <p>Years of experience capturing moments with care and precision.</p>
+    </div>
+    <div class="feature">
+      <h2>See the Magic</h2>
+      <p>View my portfolio to see the beauty of every captured moment.</p>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="stat">
+      <h2>9,659</h2>
+      <p>Photos Delivered</p>
+    </div>
+    <div class="stat">
+      <h2>100%</h2>
+      <p>Client Satisfaction</p>
+    </div>
+    <div class="stat">
+      <h2>30+</h2>
+      <p>Projects Completed</p>
+    </div>
+  </section>
+
+  <section class="blog-section">
+    <div class="blog-container">
+        <div class="blog-left">
+            <h2 class="blog-title">My blog</h2>
+            <p class="blog-description">
+                Curious about what goes into a perfect photoshoot? Check out my latest tips and behind-the-scenes stories.
+            </p>
+            <a href="#" class="view-all" data-cursor="view">View all ↗</a>
+        </div>
+
+        <div class="blog-grid">
+            <article class="blog-card" data-cursor="view">
+                <img src="amba.jpg" alt="Woman in orange sweater on city street">
+                <div class="card-overlay">
+                    <span class="blog-date">OCT 11, 2024</span>
+                    <span class="arrow-icon">↗</span>
+                    <h2 class="blog-card-title">Why every business needs professional photography</h2>
+                </div>
+            </article>
+
+            <article class="blog-card" data-cursor="view">
+                <img src="amba.jpg" alt="Woman reading magazine">
+                <div class="card-overlay">
+                    <span class="blog-date">SEP 30, 2024</span>
+                    <span class="arrow-icon">↗</span>
+                    <h2 class="blog-card-title">Feeling awkward or nervous during a photoshoot? You're not alone!</h2>
+                </div>
+            </article>
+        </div>
+    </div>
+  </section>
+
+<!-- Footer Section -->
+<footer class="footer">
+  <div class="footer-content">
+      <div class="footer-left">
+          <div class="footer-logo">* Friendship</div>
+          <p class="footer-description">A story of friendship, memories, and endless adventures.</p>
+      </div>
+      <div class="footer-right">
+          <div class="footer-links">
+              <a href="#home">Home</a>
+              <a href="#affan">Affan</a>
+              <a href="#seyf">Seyf</a>
+              <a href="#radhit">Radhit</a>
+          </div>
+          <div class="footer-social">
+              <a href="#" class="social-link">Instagram</a>
+              <a href="#" class="social-link">Twitter</a>
+              <a href="#" class="social-link">LinkedIn</a>
+          </div>
+      </div>
+  </div>
+  <div class="footer-bottom">
+      <p>&copy; 2024 Friendship Story. All rights reserved.</p>
+  </div>
+</footer>
+
+
+  <script>
+    const cursor = document.getElementById('cursor');
+    const cursorFollower = document.getElementById('cursor-follower');
+
+    document.addEventListener('mousemove', (e) => {
+      const posX = e.clientX;
+      const posY = e.clientY;
+
+      // Move the main cursor
+      cursor.style.transform = `translate3d(${posX}px, ${posY}px, 0)`;
+
+      // Move the follower with slight delay
+      setTimeout(() => {
+        cursorFollower.style.transform = `translate3d(${posX}px, ${posY}px, 0)`;
+      }, 80);
+    });
+
+    // Add hover effects for interactive elements
+    const links = document.querySelectorAll('a, button, .blog-card');
+    
+    links.forEach(link => {
+      link.addEventListener('mouseenter', () => {
+        cursor.classList.add('active');
+        cursorFollower.classList.add('active');
+      });
+      
+      link.addEventListener('mouseleave', () => {
+        cursor.classList.remove('active');
+        cursorFollower.classList.remove('active');
+      });
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const animatedElements = document.querySelectorAll('.animated-text');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationDelay = entry.target.dataset.delay;
+                    entry.target.classList.add('visible');
+                } else {
+                    entry.target.classList.remove('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        animatedElements.forEach(element => {
+            observer.observe(element);
+        });
+    });
+  </script>
+</body>
+</html>
+
