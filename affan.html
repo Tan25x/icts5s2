@@ -10,18 +10,11 @@
       font-family: Arial, sans-serif;
       background-color: #f9f9f9;
       color: #333;
-      cursor: none !important;
+      cursor: none; /* Sembunyikan kursor default */
     }
 
-    header {
-      background-color: #000;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      font-size: 24px;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+    html {
+      scroll-behavior: smooth;
     }
 
     .hero {
@@ -166,6 +159,10 @@
       color: #fff;
       padding: 6rem 2rem;
       min-height: 100vh;
+      background-image: url('amb.jpg');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
     }
 
     .services-container {
@@ -195,10 +192,15 @@
     }
 
     .services-link {
-      color: #fff;
+      color: white !important;
       text-decoration: none;
-      border-bottom: 1px solid #fff;
+      border-bottom: 1px solid white;
       padding-bottom: 4px;
+      transition: opacity 0.3s ease;
+    }
+
+    .services-link:hover {
+      opacity: 0.7;
     }
 
     .services-grid {
@@ -306,6 +308,11 @@
       width: 100%;
       height: 650px;
       object-fit: cover;
+      transition: transform 0.3s ease; /* Transisi halus */
+    }
+
+    .blog-card img:hover {
+      transform: scale(1.1); /* Membesarkan gambar saat di-hover */
     }
 
     .blog-date {
@@ -460,25 +467,11 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: url('ambi.jpg');
-      background-attachment: fixed;
+      background-image: url('di.jpeg');
       background-position: center;
       background-repeat: no-repeat;
       background-size: cover;
       z-index: -1;
-    }
-
-    /* Black Bar Style */
-    .black-bar {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background-color: #000;
-      color: #fff;
-      text-align: center;
-      padding: 15px 0;
-      z-index: 2;
     }
 
     /* Text Styles */
@@ -745,7 +738,7 @@
       flex-direction: column;
       align-items: center;
       margin-left: 300px;
-      margin-top: -20px;
+      margin-top: -80px;
     }
 
     .zoom-image {
@@ -761,7 +754,7 @@
 
     .image-caption {
       text-align: center;
-      margin-top: 10px;
+      margin-top: 5px;
     }
 
     .image-caption h3 {
@@ -809,7 +802,6 @@
     .hero-content {
         z-index: 2;
         padding: 20px;
-        backdrop-filter: blur(5px);
     }
 
     .hero-title {
@@ -963,140 +955,499 @@
                 padding: 3rem 2rem 1.5rem;
             }
         }
+
+    .inspirational-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: white;
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        padding: 0 20px;
+        width: 80%;
+        z-index: 2;
+    }
+
+    .card-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7));
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        pointer-events: none; /* Agar overlay tidak menghalangi interaksi */
+    }
+
+    .blog-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: white;
+    }
+
+    .blog-title-text {
+        color: white;
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        margin-bottom: 30px;
+        line-height: 1.2;
+    }
+
+    .blog-date {
+        background-color: rgba(255, 255, 255, 0.2);
+        padding: 5px 10px;
+        border-radius: 4px;
+    }
+
+    .arrow-icon {
+        font-size: 1.5rem;
+    }
+
+    /* Tambahkan CSS untuk animasi */
+    .page-loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        animation: fadeOut 1.5s ease-in-out forwards;
+        animation-delay: 0.5s;
+    }
+
+    .loader-content {
+        text-align: center;
+        color: white;
+    }
+
+    .loader-line {
+        width: 0;
+        height: 2px;
+        background: white;
+        margin: 20px auto;
+        animation: lineGrow 2s ease-in-out forwards;
+    }
+
+    .loader-text {
+        font-size: 1.5rem;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: textFadeUp 1s ease-out forwards;
+        animation-delay: 0.5s;
+    }
+
+    @keyframes fadeOut {
+        from { opacity: 1; visibility: visible; }
+        to { opacity: 0; visibility: hidden; }
+    }
+
+    @keyframes lineGrow {
+        from { width: 0; }
+        to { width: 200px; }
+    }
+
+    @keyframes textFadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Animasi untuk konten utama */
+    .hero-content {
+        opacity: 0;
+        animation: contentFadeIn 1s ease-out forwards;
+        animation-delay: 0.5s;
+    }
+
+    @keyframes contentFadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .scroll-animation {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .scroll-animation.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .animate-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Autoshow animation */
+    .image-section,
+    .services-section,
+    .stats,
+    .blog-section {
+      opacity: 0; /* Mulai dengan elemen tersembunyi */
+      transform: translateY(20px); /* Geser elemen ke bawah */
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* Transisi halus */
+    }
+
+    .image-section.visible,
+    .services-section.visible,
+    .stats.visible,
+    .blog-section.visible {
+      opacity: 1; /* Tampilkan elemen */
+      transform: translateY(0); /* Kembalikan posisi elemen */
+    }
+
+    .recommendation {
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin: 20px 0;
+        text-align: left;
+        max-width: 600px;
+        width: 100%;
+    }
+
+    .recommendation-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .rating {
+        color: #ffd700;
+        margin-bottom: 10px;
+    }
+
+    .recommendation-quote {
+        font-style: italic;
+        margin: 10px 0;
+    }
+
+    .recommendation-author {
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    .instagram-section {
+        margin-top: 20px; /* Ubah nilai ini untuk memindahkan lebih ke atas */
+        text-align: center; /* Pastikan teks tetap di tengah */
+    }
+
+    .instagram-title {
+        font-size: 2rem; /* Ukuran font judul */
+        margin-bottom: 10px; /* Ruang bawah */
+    }
+
+    .instagram-description {
+        font-size: 1rem; /* Ukuran font deskripsi */
+        margin-bottom: 20px; /* Ruang bawah */
+    }
+
+    .small-image {
+        margin-top: -80px; /* Ubah nilai ini untuk memindahkan lebih ke atas */
+    }
+
+    .image-caption {
+        text-align: center; /* Pastikan teks tetap di tengah */
+        margin-top: 5px; /* Atur margin atas jika perlu */
+    }
+    .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 1.2rem;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border-radius: 100px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: fixed;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: calc(100% - 4rem);
+}
+
+.logo {
+    font-size: 1.3rem;
+    font-weight: 500;
+    letter-spacing: -0.5px;
+    padding-left: 1rem;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    padding: 0.5rem 1.5rem;
+    border-radius: 100px;
+    margin-left: auto;
+    margin-right: 2rem;
+}
+
+.nav-links a {
+    color: var(--text-color);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+    font-size: 0.9rem;
+    text-transform: lowercase;
+    letter-spacing: 0.5px;
+    font-weight: 400;
+    padding: 0.3rem 0.8rem;
+}
+
+.nav-links a:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 100px;
+}
+
+.about-btn {
+    position: relative;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.6rem 1.2rem;
+    color: var(--text-color);
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    overflow: hidden;
+    margin-right: 1rem;
+}
+
+/* Add the glowing border animation */
+.about-btn::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(45deg, var(--primary-color), transparent, var(--primary-color));
+    border-radius: 50px;
+    z-index: -1;
+    animation: glowing 1.5s linear infinite;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.about-btn:hover::before {
+    opacity: 1;
+}
+
+@keyframes glowing {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Update media query for navbar responsiveness */
+@media (max-width: 768px) {
+    .navbar {
+        width: calc(100% - 2rem);
+        padding: 1.5rem;
+    }
+    
+    .nav-links {
+        display: none; /* Hide nav links on mobile */
+    }
+    
+    .about-btn {
+        padding: 0.5rem 1rem;
+    }
+}
+
+/* Default styles for the navbar */
+.navbar {
+    background-color: black; /* Set background color */
+    padding: 10px; /* Add some padding */
+}
+
+/* Glowing effect for text on black background */
+.nav-links a {
+    color: white; /* Default text color */
+    text-decoration: none; /* Remove underline */
+    transition: text-shadow 0.3s ease; /* Smooth transition for glow */
+}
+
+.nav-links a:hover {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6); /* Glowing effect */
+}
+
+/* Styles for white background */
+body.white-background .navbar {
+    background-color: white; /* Set background color to white */
+}
+
+body.white-background .nav-links a {
+    color: black; /* Change text color to black */
+    text-shadow: none; /* Remove glow effect */
+}
+
   </style>
 </head>
 <body>
   <!-- Add these cursor elements right after body tag -->
-  <div id="cursor" class="cursor"></div>
-  <div id="cursor-follower" class="cursor-follower"></div>
+  <div id="cursor" class="cursor scroll-animation"></div>
+  <div id="cursor-follower" class="cursor-follower scroll-animation"></div>
 
-  <header>
-    Captured Photography
-  </header>
+  <div class="page-loader scroll-animation">
+    <div class="loader-content">
+        <div class="loader-text">Affan Profile, Get Ready!</div>
+        <div class="loader-line"></div>
+    </div>
+  </div>
+  <nav class="navbar">
+    <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">Pace Hytam</a></div>
+    <div class="nav-links">
+        <a href="affan.html">affan</a>
+        <a href="seyf.html">seyf</a>
+        <a href="radhit.html">radhit</a>
+    </div>
+    <button class="about-btn">About Me</button>
+</nav>
 
   <section class="hero-section">
     <div class="background-fixed"></div>
     
-    <div class="hero-content">
+    <div class="hero-content animate-on-scroll">
         <h1 class="hero-title">
-            <span class="animated-text" data-delay="0s">Welcome to My Photography</span>
+            <span class="animated-text" data-delay="0s">Welcome to My Page</span>
         </h1>
         <p class="hero-subtitle">
-            <span class="animated-text" data-delay="0.2s">Capturing Moments,</span>
-            <span class="animated-text" data-delay="0.4s">Creating Memories</span>
-        </p>
-        <a href="#portfolio" class="hero-button animated-text" data-delay="0.6s">View Portfolio</a>
-    </div>
-    
-    <!-- Black Bar at Bottom -->
-    <div class="black-bar">
-      Captured Photography
+            <span class="animated-text" data-delay="0.2s">Biography,</span>
+            <span class="animated-text" data-delay="0.4s">Memories</span>
+        </p><br><br>
+        <a href="#testimonial" class="hero-button animated-text" data-delay="0.6s">Let's Check it out</a>
     </div>
   </section>
 
-  <section class="quote-section">
+  <section class="quote-section" id="testimonial">
     <div class="text-content">
         <div class="photographer-info">
-            <h1 class="photographer-name">SAMUEL SPENSER</h1>
-            <p class="photographer-title">Professional Photographer</p>
+            <h1 class="photographer-name">SULTHAN AFFAN ALRASYID</h1>
+            <p class="photographer-title">A Diligent Student</p>
         </div>
 
         <div class="quote-text">
-            <span>"I don't just take photos. I capture the raw emotions, the subtle moments, and the untold stories that make life so beautiful."</span>
+            <span>"Hi!, You can called me Affan, Im Born 27 April 2007 in Bandung, but my home at Serang, Banten."</span>
         </div>
 
         <div class="additional-info">
-            <p>Whether you're celebrating love, family, or personal milestones, I'm here to help you capture it all. Let's tell your story through timeless photography.</p>
+            <p>Today i stayed in Lembang at dorm with my friends, I study at Darul Hikam Integrated School which is International Quricculum.</p>
         </div>
 
-        <div class="review-section">
-            <div class="rating-section">
-                <span class="rating">5.0/5</span>
-                <span class="stars">★★★★★</span>
+        <div class="recommendation">
+            <h3 class="recommendation-title">My Recommended Story book is Written by TereLiye</h3>
+            <div class="rating">
+                ★★★★★
             </div>
-            <p>"Working with Samuel was seamless. He turned our special day into a gallery of memories that we will cherish forever."</p>
-            <p>Sarah & John, Newlyweds</p>
+            <p class="recommendation-quote">"If you wanted to be love, do love Allah and His Creatures"</p>
+            <p class="recommendation-author">By Someone</p>
         </div>
     </div>
 
-    <section class="image-section">
+    <section class="image-section scroll-animation">
         <div class="large-image">
-            <img src="amba.jpg" alt="Profile" class="zoom-image">
+            <img src="af.jpg" alt="Profile" class="zoom-image">
         </div>
         <div class="small-image">
-            <img src="amba.jpg" alt="Work" class="zoom-image">
+            <a href="https://www.instagram.com/_.s.affan.a._/" target="_blank">
+                <img src="image.png" alt="Work" class="zoom-image">
+            </a>
             <div class="image-caption">
-                <h3>Ready to capture your moments?</h3>
-                <p>Book your photoshoot today and let's turn your vision into timeless art.</p>
+                <h3>This is my INSTAGRAM ACC</h3>
+                <p>You can follow me if you want to talk or see who tagged me.</p>
             </div>
         </div>
     </section>
-
-    <a href="#work" class="services-link">Check out my work →</a>
   </section>
 
-  <section class="services-section">
+  <section class="services-section scroll-animation">
     <div class="services-container">
         <div class="services-left">
-            <h2 class="services-title animated-text" data-delay="1.6s">What I can offer</h2>
-            <p class="services-description animated-text" data-delay="1.8s">
-                I provide a range of photography services, capturing moments 
-                that matter most to you.
-            </p>
-            <a href="#work" class="services-link animated-text" data-delay="2s">Check out my work →</a>
+            <h1 class="services-title">My Hobbies</h1>
+            <p class="services-description">Mostly, i love to do something fun, like knowing anything news or funplay.</p>
+            <a href="#blog" class="services-link">Check my blog! →</a>
         </div>
 
         <div class="services-grid">
             <div class="service-item">
-                <img src="headshot-icon.jpg" alt="" class="service-icon">
+                <img src="qr.jpeg" alt="" class="service-icon">
                 <div class="service-content">
-                    <h3>Professional Headshots</h3>
-                    <p>Stand out with a polished, professional look.</p>
+                    <h3>Love Alquran</h3>
+                    <p>Wanted to be God's Family.</p>
                 </div>
                 <span class="service-number">01</span>
             </div>
 
             <div class="service-item">
-                <img src="portrait-icon.jpg" alt="" class="service-icon">
+                <img src="bs.jpeg" alt="" class="service-icon">
                 <div class="service-content">
-                    <h3>Portrait Photography</h3>
-                    <p>Capture your best self with beautifully composed portraits.</p>
+                    <h3>Playing Basketball</h3>
+                    <p>Feels confindence when and refreshing.</p>
                 </div>
                 <span class="service-number">04</span>
             </div>
 
             <div class="service-item">
-                <img src="events-icon.jpg" alt="" class="service-icon">
+                <img src="ex.jpeg" alt="" class="service-icon">
                 <div class="service-content">
-                    <h3>Events</h3>
-                    <p>Your day, your story—captured beautifully.</p>
+                    <h3>Workout</h3>
+                    <p>Getting strong day by day is my dream.</p>
                 </div>
                 <span class="service-number">02</span>
             </div>
 
             <div class="service-item">
-                <img src="family-icon.jpg" alt="" class="service-icon">
+                <img src="ml.jpeg" alt="" class="service-icon">
                 <div class="service-content">
-                    <h3>Family Sessions</h3>
-                    <p>Celebrate your family's unique bond with heartwarming photos.</p>
+                    <h3>Playing Video Games</h3>
+                    <p>Try to critical thinking in anysituation.</p>
                 </div>
                 <span class="service-number">05</span>
             </div>
 
             <div class="service-item">
-                <img src="weddings-icon.jpg" alt="" class="service-icon">
+                <img src="pm.jpeg" alt="" class="service-icon">
                 <div class="service-content">
-                    <h3>Weddings</h3>
-                    <p>From the first look to the final dance, you'll relive every moment.</p>
+                    <h3>Looking in surrounding</h3>
+                    <p>Feels proud and calm.</p>
                 </div>
                 <span class="service-number">03</span>
             </div>
 
             <div class="service-item">
-                <img src="lifestyle-icon.jpg" alt="" class="service-icon">
+                <img src="tl.jpeg" alt="" class="service-icon">
                 <div class="service-content">
-                    <h3>Lifestyle Photography</h3>
-                    <p>Showcase the authentic moments of your daily life with story-driven images.</p>
+                    <h3>Communication with friends</h3>
+                    <p>Just wanted to have kinds of memorize with friends.</p>
                 </div>
                 <span class="service-number">06</span>
             </div>
@@ -1104,67 +1455,51 @@
     </div>
   </section>
 
-  <section class="portrait-section">
-    <h1>I Capture Stories, Not Just Photos</h1>
-    <p>I don't just take photos; I capture the raw emotions, subtle moments, and untold stories that make life beautiful.</p>
-  </section>
-
-  <section class="section features">
-    <div class="feature">
-      <h2>What I Offer</h2>
-      <p>High-quality photography for every occasion, tailored to your needs.</p>
+  <section class="stats scroll-animation">
+    <div class="stat">
+      <h2>1.345</h2>
+      <p>Friends</p>
     </div>
-    <div class="feature">
-      <h2>Why Choose Me?</h2>
-      <p>Years of experience capturing moments with care and precision.</p>
+    <div class="stat">
+      <h2>5+</h2>
+      <p>Expert Sports</p>
     </div>
-    <div class="feature">
-      <h2>See the Magic</h2>
-      <p>View my portfolio to see the beauty of every captured moment.</p>
+    <div class="stat">
+      <h2>4</h2>
+      <p>Achievements Completed</p>
     </div>
   </section>
 
-  <section class="stats">
-    <div class="stat">
-      <h2>9,659</h2>
-      <p>Photos Delivered</p>
-    </div>
-    <div class="stat">
-      <h2>100%</h2>
-      <p>Client Satisfaction</p>
-    </div>
-    <div class="stat">
-      <h2>30+</h2>
-      <p>Projects Completed</p>
-    </div>
-  </section>
-
-  <section class="blog-section">
+  <section class="blog-section scroll-animation" id="blog">
     <div class="blog-container">
         <div class="blog-left">
             <h2 class="blog-title">My blog</h2>
             <p class="blog-description">
-                Curious about what goes into a perfect photoshoot? Check out my latest tips and behind-the-scenes stories.
+                My Best memories are when i travel with my family and my friends.
             </p>
-            <a href="#" class="view-all" data-cursor="view">View all ↗</a>
+            <a href="#" class="view-all" data-cursor="view">Back ↗</a>
         </div>
 
         <div class="blog-grid">
             <article class="blog-card" data-cursor="view">
-                <img src="amba.jpg" alt="Woman in orange sweater on city street">
+                <img src="a.jpg" alt="Clouds with circles">
                 <div class="card-overlay">
-                    <span class="blog-date">OCT 11, 2024</span>
-                    <span class="arrow-icon">↗</span>
-                    <h2 class="blog-card-title">Why every business needs professional photography</h2>
+                    <div class="blog-header">
+                        <span class="blog-date">OCT 11, 2024</span>
+                        <span class="arrow-icon">↗</span>
+                    </div>
+                    <div class="blog-title-text">
+                        "We are SIBLINGS, Support and Help each other"
+                    </div>
                 </div>
             </article>
 
             <article class="blog-card" data-cursor="view">
-                <img src="amba.jpg" alt="Woman reading magazine">
+                <img src="fm.jpg" alt="Woman reading magazine">
                 <div class="card-overlay">
                     <span class="blog-date">SEP 30, 2024</span>
                     <span class="arrow-icon">↗</span>
-                    <h2 class="blog-card-title">Feeling awkward or nervous during a photoshoot? You're not alone!</h2>
+                    <h2 class="blog-card-title">Happy Family is the best thing i have</h2>
                 </div>
             </article>
         </div>
@@ -1202,18 +1537,25 @@
     const cursor = document.getElementById('cursor');
     const cursorFollower = document.getElementById('cursor-follower');
 
+    let posX = 0, posY = 0;
+    let followerX = 0, followerY = 0;
+
     document.addEventListener('mousemove', (e) => {
-      const posX = e.clientX;
-      const posY = e.clientY;
-
-      // Move the main cursor
-      cursor.style.transform = `translate3d(${posX}px, ${posY}px, 0)`;
-
-      // Move the follower with slight delay
-      setTimeout(() => {
-        cursorFollower.style.transform = `translate3d(${posX}px, ${posY}px, 0)`;
-      }, 80);
+      posX = e.clientX;
+      posY = e.clientY;
     });
+
+    function animateCursor() {
+      followerX += (posX - followerX) * 0.3;
+      followerY += (posY - followerY) * 0.3;
+
+      cursor.style.transform = `translate3d(${posX}px, ${posY}px, 0)`;
+      cursorFollower.style.transform = `translate3d(${followerX}px, ${followerY}px, 0)`;
+
+      requestAnimationFrame(animateCursor);
+    }
+
+    animateCursor();
 
     // Add hover effects for interactive elements
     const links = document.querySelectorAll('a, button, .blog-card');
@@ -1247,6 +1589,40 @@
         animatedElements.forEach(element => {
             observer.observe(element);
         });
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const scrollElements = document.querySelectorAll('.scroll-animation');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          } else {
+            entry.target.classList.remove('visible');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      scrollElements.forEach(element => {
+        observer.observe(element);
+      });
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const elements = document.querySelectorAll('.animate-on-scroll');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      elements.forEach(element => {
+        observer.observe(element);
+      });
     });
   </script>
 </body>
